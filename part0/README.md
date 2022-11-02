@@ -1,49 +1,8 @@
 ## Exercise 0.4
-```mermaid
-sequenceDiagram
-browser->>server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
-server-->>browser: HTML-code
-browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
-server-->>browser: HTML-code
-browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
-server-->>browser: main.css
-browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
-server-->>browser: main.js
-
-note over browser: browser starts executing js-code that <br/> requests JSON data from server
-
-browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-server-->>browser: [...,{"content":"Good night!","date":"2022-11-02T18:49:05.438Z"}]
-
-note over browser: browser executes the event handler  <br/> that renders notes to display
-```
+[![](https://mermaid.ink/img/pako:eNq9lF9v0zAUxb_Kxc9N0qRd10aoT0xDiLFJ7RMYITe-SbwldrCdblWV7851WkBIA4Q08RJF91jnd-_xnyMrjESWM4dfe9QFvlGisqLlemfNo0Mbrdf03aPN4e12ewd3t5st1N53Lk8S53up0MWFi2tsnNIPKi5Vgk-i7RoUXZdofPyijUeuTy4R-Z2dg-HN-yjwf0u7vvonGIHcfyG1QmmSn4f9FF-Odf8HVNC4DsODoQXwQz3_gPPCegf4hEXvla7g3o1hgK-Fh9c7m6zBhv13tOrd5vYDSOEFlNa0cIIGwIsME4ypYaOfHedTHMeTI6czqT1qz1nO2bUxErSqav-Kswln5ICjkE2zLErTaJpt02U-X-XTi3g-W37kbPj8l0BOSaCjABBwTyiohZYNSec4xmQsaonWwXiuwBuQynWNOLAJa9FS9pIuzpFrAM7IqQ19QejQPnDG9UDrRO_N5qALlnvb44T1Xej_fMl-LV5J5Y1leSkaR8XGCIKz_Mj8oQs3tFLOkyNlU6oq1HvbUPl79kGOK-XrfhcXpk2ckjVte71fLZJFtliKbIaLy5m4mM1ksUtXyzKbp6W8nKaZYMMwYTjyb07PwfgqDN8AUwlywg?type=png)](https://mermaid.live/edit#pako:eNq9lF9v0zAUxb_Kxc9N0qRd10aoT0xDiLFJ7RMYITe-SbwldrCdblWV7851WkBIA4Q08RJF91jnd-_xnyMrjESWM4dfe9QFvlGisqLlemfNo0Mbrdf03aPN4e12ewd3t5st1N53Lk8S53up0MWFi2tsnNIPKi5Vgk-i7RoUXZdofPyijUeuTy4R-Z2dg-HN-yjwf0u7vvonGIHcfyG1QmmSn4f9FF-Odf8HVNC4DsODoQXwQz3_gPPCegf4hEXvla7g3o1hgK-Fh9c7m6zBhv13tOrd5vYDSOEFlNa0cIIGwIsME4ypYaOfHedTHMeTI6czqT1qz1nO2bUxErSqav-Kswln5ICjkE2zLErTaJpt02U-X-XTi3g-W37kbPj8l0BOSaCjABBwTyiohZYNSec4xmQsaonWwXiuwBuQynWNOLAJa9FS9pIuzpFrAM7IqQ19QejQPnDG9UDrRO_N5qALlnvb44T1Xej_fMl-LV5J5Y1leSkaR8XGCIKz_Mj8oQs3tFLOkyNlU6oq1HvbUPl79kGOK-XrfhcXpk2ckjVte71fLZJFtliKbIaLy5m4mM1ksUtXyzKbp6W8nKaZYMMwYTjyb07PwfgqDN8AUwlywg)
 
 ## Exercise 0.5
-```mermaid
-sequenceDiagram
-browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
-server-->>browser: HTML-code
-browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
-server-->>browser: main.css
-browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
-server-->>browser: spa.js
-
-note over browser: browser starts executing js-code that requests <br/> JSON data from server end note
-
-browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-server-->>browser: [...,{"content":"Good night!","date":"2022-11-02T18:49:05.438Z"},...]
-
-note over browser: browser executes the event handler that <br/> renders notes to display
-```
+[![](https://mermaid.ink/img/pako:eNqtk0Fv2zAMhf8Kp7Njx06aJkaR04oOw7oNaE6bdlAs2lZrS54kZw2C_PdSdppdAvSSi2Hwye8jn6kDK4xEljOHf3vUBX5WorKi5XprzT-HdrJe03OHNocvm81PeLjfQO195_Ikcb6XCl1cuLjGxin9ouJSJfgq2q5B0XWJ6wTX4_cTcjp5BqvHb5NAvhKnFUqT7C7C_ovXmil-vkx6l7jWxiMY0uEsnl7AeWG9A3zFovdKV_DshijA18KDDf_BkX63tckavj79-A5SeAGlNS2MTEAtIRAC6SozBQJ1bvTFsX7HcRwdOK2K9qg9ZzlnD8ZQD6qq_SfOIs7IAQchm2bZJE0n02yTLvP5Kp_exPPZ8hdnx4h8_nyQzhgLOkoDAXeEg1po2ZA05DPGYikBtG4IgY4akMp1jdiziLVo6YdLWukD1wCckVEbWoPQpH3hjOsjnRO9N097XbDc2x4j1ndhhNP6s7wUjTtX76Xyxp6LjRFEZ_mB-X0XLk-lnCdLyqdUVaj3tqHye_5Bjivl634bF6ZNnJI17UC9Wy2SRbZYimyGi9uZuJnNZLFNV8sym6elvJ2mmWDHY8Rw4D-ON3W4sMc3r4tNLQ?type=png)](https://mermaid.live/edit#pako:eNqtk0Fv2zAMhf8Kp7Njx06aJkaR04oOw7oNaE6bdlAs2lZrS54kZw2C_PdSdppdAvSSi2Hwye8jn6kDK4xEljOHf3vUBX5WorKi5XprzT-HdrJe03OHNocvm81PeLjfQO195_Ikcb6XCl1cuLjGxin9ouJSJfgq2q5B0XWJ6wTX4_cTcjp5BqvHb5NAvhKnFUqT7C7C_ovXmil-vkx6l7jWxiMY0uEsnl7AeWG9A3zFovdKV_DshijA18KDDf_BkX63tckavj79-A5SeAGlNS2MTEAtIRAC6SozBQJ1bvTFsX7HcRwdOK2K9qg9ZzlnD8ZQD6qq_SfOIs7IAQchm2bZJE0n02yTLvP5Kp_exPPZ8hdnx4h8_nyQzhgLOkoDAXeEg1po2ZA05DPGYikBtG4IgY4akMp1jdiziLVo6YdLWukD1wCckVEbWoPQpH3hjOsjnRO9N097XbDc2x4j1ndhhNP6s7wUjTtX76Xyxp6LjRFEZ_mB-X0XLk-lnCdLyqdUVaj3tqHye_5Bjivl634bF6ZNnJI17UC9Wy2SRbZYimyGi9uZuJnNZLFNV8sym6elvJ2mmWDHY8Rw4D-ON3W4sMc3r4tNLQ)
 
 ## Exercise 0.6
-```mermaid
-sequenceDiagram
-browser->>server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
-
-note over browser: Content-type: application/json <br/> {"content":"Good night! Again...","date":"2022-11-02T19:06:45.554Z"}
-
-server-->>browser: {"message":"note created"}
-
-note over browser: browser post new_note_spa and this triggers the <br/> js application that renders the notes
-```
+[![](https://mermaid.ink/img/pako:eNptUs1u2zAMfhVO59iOncRthCHAsA3bZViB5lQIKBSLttXakifR7YrA7z7JcYMedhEIkvp-SJ5ZZRUyzjz-GdFU-E3LxslemJOzrx5dcjiE9wUdh5_H4x3c_b4_Qks0eJ5lnkal0aeVT1vsvDbPOq11hn9lP3QohyEz-PpoLOGjH6QwwsQYbICDBZ_DV2sIDSX0NiCH8KnTlSRtTfbkrYHPJ5cd4CyC0LlPMC7YD2sVGN209Am-NFKbNE0FWwmmJOHcUayLIsnzZF0c8z1fl3y7S3e77YNgU9Rx8ZQEd1cdgaJH72VzAZiVVg4DoFo-_Uf8EsBgPcFHsyCNAmq1B3K6adCFoMXFzZP_6DMUJIFDo967Iohnq6DH9VKrsJ6zMACChWIf5UF06p4FE2YKfXIke_9mKsbJjbhi4xDnsKyS8Vp2_pr9rjRZd012VgZaxs8szj8wNdpTgAzTrnUT86PrQvp95bGcNpra8ZRWts-8Vq101L7sy6wsyltZbLC82cjdZqOqU76_rYttXqubdV5INk0rhjP_r8vVzcc3_QNs395e?type=png)](https://mermaid.live/edit#pako:eNptUs1u2zAMfhVO59iOncRthCHAsA3bZViB5lQIKBSLttXakifR7YrA7z7JcYMedhEIkvp-SJ5ZZRUyzjz-GdFU-E3LxslemJOzrx5dcjiE9wUdh5_H4x3c_b4_Qks0eJ5lnkal0aeVT1vsvDbPOq11hn9lP3QohyEz-PpoLOGjH6QwwsQYbICDBZ_DV2sIDSX0NiCH8KnTlSRtTfbkrYHPJ5cd4CyC0LlPMC7YD2sVGN209Am-NFKbNE0FWwmmJOHcUayLIsnzZF0c8z1fl3y7S3e77YNgU9Rx8ZQEd1cdgaJH72VzAZiVVg4DoFo-_Uf8EsBgPcFHsyCNAmq1B3K6adCFoMXFzZP_6DMUJIFDo967Iohnq6DH9VKrsJ6zMACChWIf5UF06p4FE2YKfXIke_9mKsbJjbhi4xDnsKyS8Vp2_pr9rjRZd012VgZaxs8szj8wNdpTgAzTrnUT86PrQvp95bGcNpra8ZRWts-8Vq101L7sy6wsyltZbLC82cjdZqOqU76_rYttXqubdV5INk0rhjP_r8vVzcc3_QNs395e)
