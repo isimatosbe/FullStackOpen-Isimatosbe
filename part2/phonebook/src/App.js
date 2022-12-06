@@ -1,4 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import comms from './components/Communications'
+import './index.css'
+
+const Notification = ({ message, className }) => {
+  if (message === null) {
+    return
+  }
+  else {
+    return (
+      <div className={className}>
+        {message}
+      </div>
+    )
+  }
+}
 
 const Filter = ({ filter, handler }) => (
   <div>
@@ -22,23 +37,27 @@ const PersonsForm = ({ submitHandler, nameValue, nameHandler, numberValue, numbe
   </div>
 )
 
-const Persons = ({ persons }) => (
+const Persons = ({ persons, handlerDelete }) => (
   <div>
-    {persons.map(person => <p key={person.id}>{person.name} {person.number}</p>)}
+    {persons.map(person => <p key={person.name}>{person.name} {person.number} <button onClick={() => handlerDelete(person)}>Delete</button></p>)}
   </div>
 )
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
-
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null) 
+  const [errorClassName, setErrorClassName] = useState('')
+
+  useEffect(() => {
+    comms
+      .fetchData()
+      .then(response => {
+        setPersons(response)
+      })
+    }, [])
 
   const addNumber = (event) => {
     event.preventDefault()
@@ -47,14 +66,71 @@ const App = () => {
       const personObject = {
         name: newName,
         number: newNumber,
-        id: persons.length + 1
+        id: persons.map(person => person.id)[persons.length - 1] + 1
       }
-      setPersons(persons.concat(personObject))
+      
+      comms
+        .newData(personObject)
+        .then(() => {
+          setPersons(persons.concat(personObject))
+          setErrorClassName('message')
+          setErrorMessage(`Added ${newName}`)
+          })
+        .catch(() => {
+          setErrorClassName('error')
+          setErrorMessage(`${newName} is already added`)
+          })
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 2500)
+
       setNewName('')
       setNewNumber('')
     }
     else {
-      alert(`${newName} is already added to phonebook`)
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with the new one?`)) {
+        const personObject = {
+          name: newName,
+          number: newNumber,
+          id: persons.filter(person => person.name === newName)[0].id
+        }
+        
+        comms.updateData(personObject)
+          .then(() => {
+            setPersons(persons.filter(person => !(person.name === newName)).concat(personObject))
+            setErrorClassName('message')
+            setErrorMessage(`${newName}'s number updated to ${newNumber}`)
+          })
+          .catch(() => {
+            setErrorClassName('error')
+            setErrorMessage(`Information of ${newName} has already been removed from the server`)
+          })
+          
+
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 2500)
+
+        setNewName('')
+        setNewNumber('')
+      }
+    }
+  }
+
+  const removeNumber = person => {
+    if (window.confirm(`Delete ${person.name}?`)) {
+      comms
+        .deleteData(person.id)
+        .then(() => {
+          setPersons(persons.filter(pers => !(pers.name === person.name)))
+        })
+        .catch(() => {
+          setErrorClassName('error')
+          setErrorMessage(`Information of ${person.name} has already been removed from the server`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 2500)
+        })
     }
   }
 
@@ -75,6 +151,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} className={errorClassName} />
 
       <Filter filter={filter} handler={handleFilterChange} />
 
@@ -87,7 +164,7 @@ const App = () => {
 
       <h3>Numbers</h3>
 
-      <Persons persons={showNumbers} />
+      <Persons persons={showNumbers} handlerDelete={removeNumber} />
     </div>
   )
 }
