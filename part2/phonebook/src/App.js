@@ -76,9 +76,10 @@ const App = () => {
           setErrorClassName('message')
           setErrorMessage(`Added ${newName}`)
           })
-        .catch(() => {
+        .catch(error => {
           setErrorClassName('error')
-          setErrorMessage(`${newName} is already added`)
+          console.log(error.response.data.error)
+          setErrorMessage(error.response.data.error)
           })
       setTimeout(() => {
         setErrorMessage(null)
@@ -101,9 +102,10 @@ const App = () => {
             setErrorClassName('message')
             setErrorMessage(`${newName}'s number updated to ${newNumber}`)
           })
-          .catch(() => {
+          .catch(error => {
             setErrorClassName('error')
-            setErrorMessage(`Information of ${newName} has already been removed from the server`)
+            console.log(error.response.data.message)
+            setErrorMessage(error.response.data.message)
           })
           
 
