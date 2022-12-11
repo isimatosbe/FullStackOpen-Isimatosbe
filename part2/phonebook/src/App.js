@@ -146,7 +146,7 @@ const App = () => {
     setFilter(event.target.value)
   }
 
-  const showNumbers = persons.filter(person => !(person.name.toLowerCase().indexOf(filter) === -1))
+  const showNumbers = persons.filter(person => !(person.name.toLowerCase().indexOf(filter.toLowerCase()) === -1))
 
   return (
     <div>
