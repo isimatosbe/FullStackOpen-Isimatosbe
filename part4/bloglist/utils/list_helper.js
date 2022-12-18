@@ -44,12 +44,11 @@ const mostLikes = (blogs) => {
   }
     
   const authors = blogs.map(blog => blog.author).reduce(reducer, [])
-  console.log(authors)
+
   const authorsLikes = authors.map(author => ({ 
     author: author, 
     likes: blogs.filter(blog => blog.author === author).map(blog => blog.likes).reduce((accumulator, likes) => { return accumulator + likes },0)
   }))
-  console.log(authorsLikes)
   const mostLikes = Math.max(...authorsLikes.map(author => author.likes))
 
   return authorsLikes.filter(author => author.likes === mostLikes)
