@@ -7,3 +7,15 @@ content-type: application/json
   "url": "google.com",
   "likes": 1090
 }
+
+### 
+PUT http://localhost:3001/api/blogs/639f79fd10dd05e221ac547d HTTP/1.1
+content-type: application/json
+
+{
+  "likes": 0
+}
+
+###
+GET http://localhost:3001/api/blogs/639f79fd10dd05e221ac547d HTTP/1.1
+content-type: application/json

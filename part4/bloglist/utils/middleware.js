@@ -13,7 +13,6 @@ const unknownEndpoint = (request, response) => {
 }
 
 const errorHandler = (error, request, response) => {
-  console.log('Prueba',error)
   logger.error(error.message)
 
   if (error.name === 'CastError') {
