@@ -20,7 +20,8 @@
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
     "dev-test": "cross-env NODE_ENV=test nodemon index.js",
     "lint": "eslint .",
-    "dev-back": "cross-env PORT=3003 NODE_ENV=development nodemon index.js"
+    "dev-back": "cross-env PORT=3003 NODE_ENV=development nodemon index.js",
+    "test-back": "cross-env PORT=3003 NODE_ENV=test node index.js"
   },
   "author": "Isidro Matos Bellido",
   "license": "MIT",

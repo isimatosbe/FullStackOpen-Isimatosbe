@@ -1,25 +1,6 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const handleLike = ({ blog, blogs, setBlogs }) => {
-  const newBlog = {
-    ...blog,
-    likes: blog.likes + 1,
-    user: blog.user.id
-  }
-
-  blogService.update(blog.id, newBlog)
-
-  setBlogs(blogs.map(b => {
-    if (b.id === blog.id) {
-      return { ...b, likes: b.likes + 1 }
-    }
-    else {
-      return b
-    }
-  }))
-}
-
 const handleRemove = async ({ blog, blogs, setBlogs, setErrorMessage, setErrorClassName }) => {
   if (window.confirm(`Do you really want to remove ${blog.title} by ${blog.author}?`)) {
     try {
@@ -39,19 +20,19 @@ const handleRemove = async ({ blog, blogs, setBlogs, setErrorMessage, setErrorCl
   }
 }
 
-const Blog = ({ blog, blogs, setBlogs, setErrorMessage, setErrorClassName }) => {
+const Blog = ({ blog, blogs, setBlogs, setErrorMessage, setErrorClassName, handleLike }) => {
   const [visible, setVisible] = useState(false)
 
   return (
     <div className="blogStyle">
       <div>
         {blog.title} by {blog.author}
-        <button onClick={() => setVisible(!visible)}>{visible ? 'Hide' : 'View'}</button>
+        <button id='view-blog' onClick={() => setVisible(!visible)}>{visible ? 'Hide' : 'View'}</button>
         <div style={{ display: visible ? '' : 'none' }}>
           <p>Url: {blog.url}</p>
-          <p>Likes: {blog.likes} <button onClick={() => handleLike({ blog, blogs, setBlogs })}>Like</button></p>
+          <p>Likes: {blog.likes} <button id='like-blog' onClick={() => handleLike({ blog })}>Like</button></p>
           <p>Creator: {blog.user.name}</p>
-          <button onClick={() => handleRemove({ blog, blogs, setBlogs, setErrorMessage, setErrorClassName })}>Remove</button>
+          <button id='delete-blog' onClick={() => handleRemove({ blog, blogs, setBlogs, setErrorMessage, setErrorClassName })}>Remove</button>
         </div>
       </div>
     </div>

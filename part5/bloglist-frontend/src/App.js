@@ -92,13 +92,33 @@ const App = () => {
     }, 2500)
   }
 
+  const setLikes = ({ blog }) => {
+    const newBlog = {
+      ...blog,
+      likes: blog.likes + 1,
+      user: blog.user.id
+    }
+
+    blogService.update(blog.id, newBlog)
+
+    setBlogs(blogs.map(b => {
+      if (b.id === blog.id) {
+        return { ...b, likes: b.likes + 1 }
+      }
+      else {
+        return b
+      }
+    }))
+  }
+
   const blogForm = () => (
-    <div>
+    <div id='blogForm'>
       {blogs.sort((a, b) => b.likes > a.likes).map(blog =>
         <Blog key={blog.id} blog={blog}
           blogs={blogs} setBlogs={setBlogs}
           setErrorMessage={setErrorMessage}
-          setErrorClassName={setErrorClassName} />
+          setErrorClassName={setErrorClassName}
+          handleLike={setLikes} />
       )}
     </div>
   )
