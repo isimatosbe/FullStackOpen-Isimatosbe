@@ -98,3 +98,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb
 ###
 DELETE http://localhost:3001/api/blogs/63aee071c27d7476d99b9a94
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYzYWVkZTQxOTI0ZDQyNjM4NzUyMDkxNyIsImlhdCI6MTY3MjQwNTc5NCwiZXhwIjoxNjcyNDA5Mzk0fQ.0UHWByf7iMz2w5HHQHnFLeVG4QJn_ysrRpzSCxrXaIg
+
+###
+PUT http://localhost:3003/api/blogs/63b1dbd71d7ac04ac7d46184/comments HTTP/1.1
+content-type: application/json
+
+{
+  "comment": "Pueba Isidro"
+}

@@ -21,6 +21,20 @@ blogsRouter.get("/:id", (request, response) => {
     });
 });
 
+blogsRouter.get("/:id/comments", (request, response) => {
+  Blog.findById(request.params.id)
+    .then((blog) => {
+      if (blog) {
+        response.json(blog.comments);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch(() => {
+      response.status(400).json({ error: "malformatted id" });
+    });
+});
+
 blogsRouter.post("/", middleware.userExtractor, async (request, response) => {
   const body = request.body;
   const user = request.user;
@@ -30,7 +44,7 @@ blogsRouter.post("/", middleware.userExtractor, async (request, response) => {
     author: body.author,
     url: body.url,
     likes: body.likes,
-    user: user._id,
+    user: user._id
   });
 
   const savedBlog = await blog.save();
@@ -38,6 +52,20 @@ blogsRouter.post("/", middleware.userExtractor, async (request, response) => {
   await user.save();
 
   response.status(201).json(savedBlog);
+});
+
+blogsRouter.put("/:id/comments", async (request, response) => {
+  const body = request.body;
+  const previousBlog = await Blog.findById(request.params.id)
+
+  const blog = {
+    comments: previousBlog.comments.concat(body.comment)
+  }
+
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {
+    new: true,
+  });
+  response.json(updatedBlog);
 });
 
 blogsRouter.put("/:id", async (request, response) => {

@@ -21,7 +21,7 @@ const create = async (newObject) => {
 
 const update = async (id, newObject) => {
   const response = await axios.put(`${baseUrl}/${id}`, newObject);
-  return response.data
+  return response.data;
 };
 
 const deleteBlog = async (id) => {
@@ -33,12 +33,27 @@ const deleteBlog = async (id) => {
 };
 
 const likeBlogID = async (id) => {
-  const blogs = await getAll()
-  const blog = blogs.filter(blog => blog.id === id)[0]
+  const blogs = await getAll();
+  const blog = blogs.filter((blog) => blog.id === id)[0];
 
-  const likedBlog = {...blog, likes: blog.likes + 1}
-  const response = await update(id, likedBlog)
+  const likedBlog = { ...blog, likes: blog.likes + 1 };
+  const response = await update(id, likedBlog);
   return response;
-}
+};
 
-export default { getAll, create, update, setToken, deleteBlog, likeBlogID };
+const commentBlog = async (blog, comment) => {
+  const response = await axios.put(`${baseUrl}/${blog.id}/comments`, {
+    comment,
+  });
+  return response;
+};
+
+export default {
+  getAll,
+  create,
+  update,
+  setToken,
+  deleteBlog,
+  likeBlogID,
+  commentBlog,
+};

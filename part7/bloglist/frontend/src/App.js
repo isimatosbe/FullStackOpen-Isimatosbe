@@ -1,50 +1,69 @@
-import { useEffect, useRef } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { useEffect } from "react";
+import Home from "./components/Home";
+import Users from "./components/Users";
+import Notification from "./components/Notification";
+import { useField } from "./services/services";
+import { useDispatch, useSelector } from "react-redux";
 import LoginForm from "./components/LoginForm";
-import NewBlog from "./components/NewBlog";
-import Togglable from "./components/Togglable";
-import Notification from "./components/Notification"
+import { logoutUser } from "./reducers/userReducer";
+import { initializeUser } from "./reducers/userReducer";
 import { initializeBlogs } from "./reducers/blogReducer";
-import { useDispatch, useSelector } from 'react-redux'
-import BlogList from "./components/BlogList";
-import { useField } from "./services/services"
-import { initializeUser, logoutUser } from "./reducers/userReducer";
-import "./index.css";
+import UserPage from "./components/UserPage";
+import BlogPage from "./components/BlogPage";
 
 const App = () => {
-  const dispatch = useDispatch()
-  const username = useField("text");
-  const password = useField("text");
-  const user = useSelector(state => state.user)
-
-  const blogFormRef = useRef();
+  const dispatch = useDispatch();
+  const [username, resetUsername] = useField("text");
+  const [password, resetPassword] = useField("text");
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     dispatch(initializeBlogs());
-    dispatch(initializeUser())
-  }, [dispatch]);  
+    dispatch(initializeUser());
+  }, [dispatch]);
 
   return (
-    <div>
+    <Router>
       <Notification />
       {user === null ? (
-        <LoginForm
-          username={username}
-          password={password}
-        />
+        <LoginForm username={username} resetUsername={resetUsername}
+                   password={password} resetPassword={resetPassword} />
       ) : (
         <div>
-          <h2>Blogs</h2>
-          <p>
-            {user.name} logged-in <button onClick={() => dispatch(logoutUser())}>logout</button>
-          </p>
-          <Togglable buttonLabel="Create new blog" ref={blogFormRef}>
-            <NewBlog blogFormRef={blogFormRef}/>
-          </Togglable>
-
-          <BlogList />
+          <div class="flex p-2">
+            <Link
+              class="inline-block rounded border border-white py-1 px-3 text-blue-500 hover:border-gray-200 hover:bg-gray-200"
+              to="/"
+            >
+              Blogs
+            </Link>
+            <Link
+              class="inline-block rounded border border-white py-1 px-3 text-blue-500 hover:border-gray-200 hover:bg-gray-200"
+              to="/users"
+            >
+              Users
+            </Link>
+            <p>
+              {user.name} logged-in
+              <button
+                class="inline-block rounded border border-white py-1 px-1 text-blue-500 hover:border-gray-200 hover:bg-gray-200"
+                onClick={() => dispatch(logoutUser())}
+              >
+                logout
+              </button>
+            </p>
+          </div>
+          <h2 class="pl-5 text-2xl font-bold">Blogs</h2>
+          <Routes>
+            <Route path="/users/:id" element={<UserPage />} />
+            <Route path="/blogs/:id" element={<BlogPage />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/" element={<Home />} />
+          </Routes>
         </div>
       )}
-    </div>
+    </Router>
   );
 };
 
