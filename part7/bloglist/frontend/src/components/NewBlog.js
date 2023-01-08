@@ -9,30 +9,33 @@ const NewBlog = ({ blogFormRef }) => {
   const [author, resetAuthor] = useField("text");
   const [url, resetUrl] = useField("text");
 
-  const createBlog = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
+    const button = event.nativeEvent.submitter.name
 
-    const blogObject = {
-      title: title.value,
-      author: author.value,
-      url: url.value,
-    };
-
-    try {
-      blogFormRef.current.toggleVisibility();
-
-      dispatch(addNewBlog(blogObject));
-
-      dispatch(
-        setNotification(
-          `A new blog ${blogObject.title} by ${blogObject.author} has been created!`,
-          "message",
-          2.5
-        )
-      );
-    } catch (exception) {
-      dispatch(setNotification("Error", "error", 2.5));
-    }
+    if (button === "newBlog") {
+      const blogObject = {
+        title: title.value,
+        author: author.value,
+        url: url.value,
+      };
+  
+      try {
+        blogFormRef.current.toggleVisibility();
+  
+        dispatch(addNewBlog(blogObject));
+  
+        dispatch(
+          setNotification(
+            `A new blog ${blogObject.title} by ${blogObject.author} has been created!`,
+            "message",
+            2.5
+          )
+        );
+      } catch (exception) {
+        dispatch(setNotification("Error", "error", 2.5));
+      }
+    }    
     
     resetTitle()
     resetAuthor()
@@ -41,7 +44,7 @@ const NewBlog = ({ blogFormRef }) => {
 
   return (
     <div class="pl-5">
-      <form onSubmit={createBlog}>
+      <form onSubmit={handleSubmit}>
         <div>
           Title:
           <input
@@ -114,10 +117,15 @@ const NewBlog = ({ blogFormRef }) => {
             onChange={url.onChange}
           />
         </div>
-        <button
+        <button name="newBlog"
           class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white px-2 hover:border-transparent rounded" 
-          id="new-blog" type="submit">
+          id="new-blog">
           Create
+        </button>
+        <button name="reset"
+          class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white px-2 hover:border-transparent rounded" 
+          id="new-blog">
+          Clean
         </button>
       </form>
     </div>
