@@ -26,7 +26,7 @@ const useRepositories = () => {
 };
 
 const Component = () => {
-    const { loading, error, data } = useQuery(GET_REPOSITORIES)//, {fetchPolicy: 'cache-and-network'});
+    const { loading, error, data } = useQuery(GET_REPOSITORIES, {fetchPolicy: 'cache-and-network'});
 
     return { loading, error, data }
 };
